@@ -22,44 +22,36 @@ let getMovies = () => {
             <img id="moviePoster" src="${index.poster}" class="card-img-top" alt="tropic">
             <div class="card-body">
                 <p class="movieDescription">${index.plot}</p>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#movieModal"
                         style="float: left">
-                    Launch demo modal
+                    Edit
                 </button>
                 <button class="btn btn-outline-primary my-2 my-sm-0" style="float: right" type="submit">delete</button>
             </div>
         </div>
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                <div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <h5 class="modal-title" id="movieModalLabel">Edit</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <form>
-                                    <label for="addMovie">Movie Title</label>
-                                    <input type="movie" class="form-control" id="addMovie" placeholder="Title of Movie">
-                                    <label for="addMovie">Star Rating: </label>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
-                                               value="option1">
-                                        <label class="form-check-label" for="inlineCheckbox1">1</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                               value="option2">
-                                        <label class="form-check-label" for="inlineCheckbox2">2</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3"
-                                               value="option3">
-                                        <label class="form-check-label" for="inlineCheckbox3">3</label>
-                                    </div>
+                                    <label for="addTitle">Movie Title</label>
+                                    <input type="text" class="form-control" id="addTitle" placeholder="Title of Movie">
+                                    <label for="addPoster">Poster Url</label>
+                                    <input type="text" class="form-control" id="addPoster" placeholder="https://">
+                                    <label for="addGenre">Genre</label>
+                                    <input type="text" class="form-control" id="addGenre" placeholder="Genre of Movie">
+                                    <label for="addDirector">Director</label>
+                                    <input type="text" class="form-control" id="addDirector" placeholder="Director of Movie">
+                                    <label for="addYear">Year</label>
+                                    <input type="text" class="form-control" id="addYear" placeholder="Year of Movie">
                                 </form>
                             </div>
                             <div class="modal-footer">
