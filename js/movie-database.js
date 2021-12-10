@@ -22,6 +22,7 @@ let getMovies = () => {
             <img id="moviePoster" src="${index.poster}" class="card-img-top" alt="tropic">
             <div class="card-body">
                 <p class="movieDescription">${index.plot}</p>
+
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#movieModal"
                         style="float: left">
                     Edit
@@ -30,11 +31,13 @@ let getMovies = () => {
             </div>
         </div>
                 <!-- Modal -->
+
                 <div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel"
-                     aria-hidden="true">
+      aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
+
                                 <h5 class="modal-title" id="movieModalLabel">Edit</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -42,6 +45,7 @@ let getMovies = () => {
                             </div>
                             <div class="modal-body">
                                 <form>
+
                                     <label for="addTitle">Movie Title</label>
                                     <input type="text" class="form-control" id="addTitle" placeholder="Title of Movie">
                                     <label for="addPoster">Poster Url</label>
@@ -142,4 +146,5 @@ let deleteMovie = (id) => {
 
 //delete function called, will be in click event
 deleteMovie(3);
+
 
