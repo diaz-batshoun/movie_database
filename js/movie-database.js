@@ -1,6 +1,14 @@
 //this is the api url
 const API_URL = "https://functional-innate-weight.glitch.me/movies"
 
+//  $('#addBtn')  for submit button on adding movies modal.
+//  $('#movieInput') user input of movie title
+//  $('#editBtn') to submit when movie is edited
+//  $('#addPoster') for user input of image url
+//  $('#addYear')   for user input of year of movie
+//  $('#addGenre')  for user input of genre of movie
+//  $('#addDirector')   for user input of director
+//  $('#addTitle')  for user input of title of movie
 
 //this is for reference we can delete
 fetch(API_URL).then(resp => resp.json()).then(data => {
@@ -20,7 +28,7 @@ let getMovies = () => {
         <div class="card" style="width: 18rem;">
             <h3 class="movieTitle text-center">${index.title.toUpperCase()}</h3>
             <img id="moviePoster" src="${index.poster}" class="card-img-top" alt="tropic">
-            <div class="card-body">
+            <div class="card-body body">
                 <p class="movieDescription">${index.plot}</p>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#movieModal"
                         style="float: left">
@@ -56,7 +64,7 @@ let getMovies = () => {
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-primary" id="editBtn">Save changes</button>
                             </div>
                         </div>
                     </div>
