@@ -10,6 +10,7 @@ const API_URL = "https://functional-innate-weight.glitch.me/movies"
 //  $('#addDirector')   for user input of director
 //  $('#addTitle')  for user input of title of movie
 
+
 //this is for reference we can delete
 fetch(API_URL).then(resp => resp.json()).then(data => {
     console.log(data)
