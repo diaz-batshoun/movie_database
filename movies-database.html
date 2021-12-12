@@ -12,6 +12,7 @@
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
     <title>Title</title>
+
     <style>
         body {
             background: url("img/movie.jpeg");
@@ -26,9 +27,48 @@
              font-size: 36px;
              margin-bottom: auto;
          }
+         /*.content {*/
+         /*    display:none;*/
+         /*}*/
+         .loader {
+             height: 100vh;
+             width: 100vw;
+             overflow: hidden;
+             background-color: #16191e;
+             position: absolute;
+         }
+         .loader>div{
+             height: 100px;
+             width: 100px;
+             border:15px solid #45474b;
+             border-top-color: #2a88e6;
+             position: absolute;
+             margin: auto;
+             top: 0;
+             bottom: 0;
+             left: 0;
+             right: 0;
+             border-radius: 50%;
+             animation: spin 1.5s infinite linear;
+         }
+         @keyframes spin {
+             100%{
+                 transform: rotate(360deg);
+             }
+         }
+         .fa-ticket-alt {
+             color: #017bfe;
+         }
     </style>
+
 </head>
 <body>
+<!-- this div allows for a loading screen css to appear which will fade out when get request has loaded -->
+<div class="loader">
+    <div></div>
+</div>
+<div class="content">
+
 <!-- NAVBAR TO SEARCH FOR MOVIES USING A MODAL POPUP FORM -->
 <header>
     <nav class="navbar navbar-dark bg-dark">
@@ -93,6 +133,7 @@
 
 
 </section>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
