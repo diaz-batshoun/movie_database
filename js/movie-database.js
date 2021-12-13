@@ -1,5 +1,5 @@
 //this is the api url
-const API_URL = "https://functional-innate-weight.glitch.me/movies"
+const API_URL = "https://spiced-bird-magnolia.glitch.me/movies"
 
 //  $('#addBtn')  for submit button on adding movies modal.
 //  $('#movieInput') user input of movie title
@@ -19,10 +19,25 @@ let deleteMovie = (id) => {
     return fetch(`${API_URL}/${id}`, options).then(resp => resp.json()).catch(err => console.error(err))
 }
 
+// let editMovie = (movie) => {
+//     let options = {
+//         method: 'PATCH', //using patch to be able to edit few items without changing everything
+//         headers: {
+//
+//             'Content-Type': 'application/json',
+//         },
+//
+//         body: JSON.stringify(movie)
+//     }
+//
+//
+//     return fetch(`${API_URL}/${movie.id}`, options).then(resp => resp.json()).catch(err => console.error(err));
+// }
+
 //this is for reference we can delete
-fetch(API_URL).then(resp => resp.json()).then(data => {
-    console.log(data)
-}).catch(err => console.error(err));
+// fetch(API_URL).then(resp => resp.json()).then(data => {
+//     console.log(data)
+// }).catch(err => console.error(err));
 
 //function to call all movie data
 let getMovies = () => {
@@ -39,55 +54,92 @@ let getMovies = () => {
             <img id="moviePoster" src="${index.poster}" class="card-img-top" alt="tropic">
             <div class="card-body body">
                 <p class="movieDescription">${index.plot}</p>
-
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#movieModal"
-                        style="float: left">
-                    Edit
-                </button>
-                <button class="btn btn-outline-primary my-2 my-sm-0" id="delete${index.id}" style="float: right" type="submit">delete</button>
+                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#movieModal"
+                style="float: left" id="modalBtn">
+            Edit Movie
+        </button>
+               
+                <button class="btn btn-outline-primary my-2 my-sm-0" id="delete" style="float: right" type="submit">delete</button>
             </div>
         </div>
-                <!-- Modal -->
+            
+        <div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
 
-                <div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel"
-      aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
+                        <h5 class="modal-title" id="movieModalLabel">Edit</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
 
-                                <h5 class="modal-title" id="movieModalLabel">Edit</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-
-                                    <label for="addTitle">Movie Title</label>
-                                    <input type="text" class="form-control" id="addTitle${index.id}" placeholder="Title of Movie">
-                                    <label for="addPoster">Poster Url</label>
-                                    <input type="text" class="form-control" id="addPoster${index.id}" placeholder="https://">
-                                    <label for="addGenre">Genre</label>
-                                    <input type="text" class="form-control" id="addGenre${index.id}" placeholder="Genre of Movie">
-                                    <label for="addDirector">Director</label>
-                                    <input type="text" class="form-control" id="addDirector${index.id}" placeholder="Director of Movie">
-                                    <label for="addYear">Year</label>
-                                    <input type="text" class="form-control" id="addYear${index.id}" placeholder="Year of Movie">
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" id="editBtn${index.id}">Save changes</button>
-                            </div>
-                        </div>
+                            <label for="addTitle">Movie Title</label>
+                            <input type="text" class="form-control" id="addTitle${index.id}" placeholder="Title of Movie">
+                            <label for="addPoster">Poster Url</label>
+                            <input type="text" class="form-control" id="addPoster${index.id}" placeholder="https://">
+                            <label for="addPlot">Plot</label>
+                            <input type="text" class="form-control" id="addPlot${index.id}" placeholder="Plot of Movie">
+<!--                            <label for="addID">ID</label>-->
+<!--                            <input type="text" class="form-control" id="addID" placerholder="ID">-->
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="editBtn" data-id="${index.id}" data-dismiss="modal">Save changes</button>
                     </div>
                 </div>
+            </div>
+        </div>   
 </div>`
+            $("#modalBtn").click(function(){
+                $("#movieModal").modal();
+            });
+
+
             $('#movieCards').append(html);
             $(`#delete${index.id}`).click(function(e) {
                 e.preventDefault()
                 deleteMovie(`${index.id}`)
             })
+            $(`#editBtn`).click(function(e) {
+                e.preventDefault()
+
+                //console.log($(`#addTitle${this.id}`).val())
+                var editID = $(this).data('id')
+                console.log(editID)
+                let editedMovie = {
+                    //id: $('#addID${index.id}').val(),
+                    plot: $(`#addPlot${editID}`).val(),
+                    poster: $(`#addPoster${editID}`).val(),
+                    //rating: '',
+                    title: $(`#addTitle${editID}`).val(),
+                };
+                // if ($(`#addPlot`).val() === '') {
+                //     return false;
+                // }else {
+                //     editedMovie = {plot: $(`#addPlot`).val()};
+                // }
+
+
+                let options = {
+                    method: 'PATCH', //using patch to be able to edit few items without changing everything
+                    headers: {
+
+                        'Content-Type': 'application/json',
+                    },
+
+                    body: JSON.stringify(editedMovie)
+                }
+
+
+                return fetch(`${API_URL}/${editID}`, options).then(resp => resp.json()).catch(err => console.error(err));
+
+            })
+
         }
     }).catch(err => console.error(err));
 
@@ -110,39 +162,26 @@ $(document).ajaxComplete(function(){
 
 //function to edit movies
 
-let editMovie = (movie) => {
-    let options = {
-        method: 'PATCH', //using patch to be able to edit few items without changing everything
-        headers: {
 
-            'Content-Type': 'application/json',
-        },
-
-        body: JSON.stringify(movie)
-    }
-
-
-    return fetch(`${API_URL}/${movie.id}`, options).then(resp => resp.json()).catch(err => console.error(err));
-}
 
 
 //will make into click event to input value in object
-$(`#editBtn`).click(event => {
-    event.preventDefault();
-    console.log($('#addTitle').value);
-let editedMovie = {
-    director: '',
-    genre: '',
-    id: 0,
-    plot: '',
-    poster:'',
-    rating: '',
-    title: $(`#addTitle${index.id}`).val(),
-    year: ''
-
-};
-
-})
+// $(`#editBtn`).click(event => {
+//     event.preventDefault();
+//     console.log($('#addTitle').value);
+// let editedMovie = {
+//     director: '',
+//     genre: '',
+//     id: 0,
+//     plot: '',
+//     poster:'',
+//     rating: '',
+//     title: $(`#addTitle${index.id}`).val(),
+//     year: ''
+//
+// };
+//
+// })
 //object editedMovie will be put into function
 // editMovie = (editedMovie);
 
@@ -152,30 +191,60 @@ let editedMovie = {
 
 
 //function to create movie
-let createMovie = (movie) => {
-    let options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(movie)
-    }
-    return fetch(API_URL, options).then(resp => resp.json()).catch(err => console.error(err));
-}
-
-// creates new movie object, click event to input value
-$('#addBtn').click(function (event) {
-event.preventDefault()
-
-    let createdMovie = {
-        rating: $('.rating[type=radio]:checked').val(),
-        title: $('#movieInput').val(),
-
-    }
-
-    createMovie(createdMovie);
-
-});
+// let createMovie = (movie) => {
+//     let options = {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(movie)
+//     }
+//     return fetch(API_URL, options).then(resp => resp.json()).catch(err => console.error(err));
+// }
+//
+// // creates new movie object, click event to input value
+// $('#addBtn').click(function (event) {
+// event.preventDefault()
+//
+//     let createdMovie = {
+//         rating: $('.rating[type=radio]:checked').val(),
+//         title: $('#movieInput').val(),
+//
+//     }
+//
+//     createMovie(createdMovie);
+//
+// });
+// $(`#editBtn`).click(function(e) {
+//     e.preventDefault()
+//
+//     let editedMovie = {
+//          id: $('#addID').val(),
+//         // plot: $(`#addPlot`).val(),
+//         // poster: $(`#addPoster`).val(),
+//         // //rating: '',
+//         // title: $(`#addTitle`).val(),
+//     };
+//     if ($(`#addPlot`).val() === '') {
+//         return false;
+//     }else {
+//         editedMovie = {plot: $(`#addPlot`).val()};
+//     }
+//
+//     let options = {
+//         method: 'PATCH', //using patch to be able to edit few items without changing everything
+//         headers: {
+//
+//             'Content-Type': 'application/json',
+//         },
+//
+//         body: JSON.stringify(editedMovie)
+//     }
+//
+//
+//     return fetch(`${API_URL}/${editedMovie.id}`, options).then(resp => resp.json()).catch(err => console.error(err));
+//
+// })
 
 
 
