@@ -79,20 +79,6 @@ let getMovies = () => {
         }
     }).catch(err => console.error(err));
 
-    $(`#delete`).click(function(e) {
-        e.preventDefault()
-
-        let deleteMovie = () => {
-            let options = {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-            return fetch(`${API_URL}/${id}`, options).then(resp => resp.json()).catch(err => console.error(err))
-        }
-        deleteMovie();
-    })
 }
 // timeout function removes removes loading class and gets movies
 setTimeout(function () {
@@ -129,21 +115,20 @@ let editMovie = (movie) => {
 
 
 //will make into click event to input value in object
-$('#editBtn').click(event => {
+$(`#editBtn`).click(event => {
     event.preventDefault();
     console.log($('#addTitle').value);
-// let editedMovie = {
-//     actors: $('#addTitle').val() ,
-//     director: '',
-//     genre: '',
-//     id: 0,
-//     plot: '',
-//     poster:'',
-//     rating: '',
-//     title: '',
-//     year: ''
-//
-// };
+let editedMovie = {
+    director: '',
+    genre: '',
+    id: 0,
+    plot: '',
+    poster:'',
+    rating: '',
+    title: $(`#addTitle${index.id}`).val(),
+    year: ''
+
+};
 
 })
 //object editedMovie will be put into function
