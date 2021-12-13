@@ -32,58 +32,82 @@ let getMovies = () => {
             <div class="card-body body">
                 <p class="movieDescription">${index.plot}</p>
 
-<!--                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#movieModal"-->
-<!--                        style="float: left">-->
-<!--                    Edit-->
-<!--                </button>-->
-<!--                <button class="btn btn-outline-primary my-2 my-sm-0" id="delete" style="float: right" type="submit">delete</button>-->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#movieModal"
+                        style="float: left">
+                    Edit
+                </button>
+                <button class="btn btn-outline-primary my-2 my-sm-0" id="delete${index.id}" style="float: right" type="submit">delete</button>
             </div>
         </div>
                 <!-- Modal -->
 
-<!--                <div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel"-->
-<!--      aria-hidden="true">-->
-<!--                    <div class="modal-dialog">-->
-<!--                        <div class="modal-content">-->
-<!--                            <div class="modal-header">-->
+                <div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel"
+      aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
 
-<!--                                <h5 class="modal-title" id="movieModalLabel">Edit</h5>-->
-<!--                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--                                    <span aria-hidden="true">&times;</span>-->
-<!--                                </button>-->
-<!--                            </div>-->
-<!--                            <div class="modal-body">-->
-<!--                                <form>-->
+                                <h5 class="modal-title" id="movieModalLabel">Edit</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
 
-<!--                                    <label for="addTitle">Movie Title</label>-->
-<!--                                    <input type="text" class="form-control" id="addTitle" placeholder="Title of Movie">-->
-<!--                                    <label for="addPoster">Poster Url</label>-->
-<!--                                    <input type="text" class="form-control" id="addPoster" placeholder="https://">-->
-<!--                                    <label for="addGenre">Genre</label>-->
-<!--                                    <input type="text" class="form-control" id="addGenre" placeholder="Genre of Movie">-->
-<!--                                    <label for="addDirector">Director</label>-->
-<!--                                    <input type="text" class="form-control" id="addDirector" placeholder="Director of Movie">-->
-<!--                                    <label for="addYear">Year</label>-->
-<!--                                    <input type="text" class="form-control" id="addYear" placeholder="Year of Movie">-->
-<!--                                </form>-->
-<!--                            </div>-->
-<!--                            <div class="modal-footer">-->
-<!--                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--                                <button type="button" class="btn btn-primary" id="editBtn">Save changes</button>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+                                    <label for="addTitle">Movie Title</label>
+                                    <input type="text" class="form-control" id="addTitle${index.id}" placeholder="Title of Movie">
+                                    <label for="addPoster">Poster Url</label>
+                                    <input type="text" class="form-control" id="addPoster${index.id}" placeholder="https://">
+                                    <label for="addGenre">Genre</label>
+                                    <input type="text" class="form-control" id="addGenre${index.id}" placeholder="Genre of Movie">
+                                    <label for="addDirector">Director</label>
+                                    <input type="text" class="form-control" id="addDirector${index.id}" placeholder="Director of Movie">
+                                    <label for="addYear">Year</label>
+                                    <input type="text" class="form-control" id="addYear${index.id}" placeholder="Year of Movie">
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="editBtn${index.id}">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 </div>`
             $('#movieCards').append(html);
         }
     }).catch(err => console.error(err));
+
+    $(`#delete`).click(function(e) {
+        e.preventDefault()
+
+        let deleteMovie = () => {
+            let options = {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+            return fetch(`${API_URL}/${id}`, options).then(resp => resp.json()).catch(err => console.error(err))
+        }
+        deleteMovie();
+    })
 }
 // timeout function removes removes loading class and gets movies
 setTimeout(function () {
-$('.loading').css('display', 'none');
+
     getMovies();
 }, 3000);
+
+$(document).ajaxStart(function(){
+    // Show image container
+    $(".loading").show();
+});
+$(document).ajaxComplete(function(){
+    // Hide image container
+    $(".loading").hide();
+});
 
 
 //function to edit movies
@@ -99,8 +123,10 @@ let editMovie = (movie) => {
         body: JSON.stringify(movie)
     }
 
+
     return fetch(`${API_URL}/${movie.id}`, options).then(resp => resp.json()).catch(err => console.error(err));
 }
+
 
 //will make into click event to input value in object
 $('#editBtn').click(event => {
@@ -145,19 +171,20 @@ $('#addBtn').click(function (event) {
 event.preventDefault()
 
     let createdMovie = {
-        id: 0,
-        poster: '',
         rating: $('.rating[type=radio]:checked').val(),
-        title: $('#movieInput').val()
+        title: $('#movieInput').val(),
 
     }
 
     createMovie(createdMovie);
-    location.reload()
+
 });
 
 
 //function to delete movie
+$(`#delete`).click(function(e) {
+    e.preventDefault()
+
 let deleteMovie = (id) => {
     let options = {
         method: 'DELETE',
@@ -167,6 +194,8 @@ let deleteMovie = (id) => {
     }
     return fetch(`${API_URL}/${id}`, options).then(resp => resp.json()).catch(err => console.error(err))
 }
+deleteMovie();
+})
 
 //delete function called, will be in click event
 // deleteMovie(7)
