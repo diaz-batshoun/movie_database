@@ -105,18 +105,22 @@ let getMovies = () => {
                 e.preventDefault()
                 deleteMovie(`${index.id}`)
             })
-            $(`#editBtn`).click(function(e) {
-                e.preventDefault()
 
+            $(`#editBtn${index.id}`).click(function(e) {
+                e.preventDefault()
+                $(`#editBtn${ele.id}`).attr('disabled');
                 //console.log($(`#addTitle${this.id}`).val())
+                let userTitle = $(`#addTitle${index.id}`).val()
+                let userPlot = $(`#addPlot${index.id}`).val()
+                let userPoster = $(`#addPoster${index.id}`).val()
                 var editID = $(this).data('id')
                 console.log(editID)
                 let editedMovie = {
                     //id: $('#addID${index.id}').val(),
-                    plot: $(`#addPlot${editID}`).val(),
-                    poster: $(`#addPoster${editID}`).val(),
+                    plot: userPlot,
+                    poster: userPoster,
                     //rating: '',
-                    title: $(`#addTitle${editID}`).val(),
+                    title: userTitle,
                 };
                 // if ($(`#addPlot`).val() === '') {
                 //     return false;
@@ -136,7 +140,7 @@ let getMovies = () => {
                 }
 
 
-                return fetch(`${API_URL}/${editID}`, options).then(resp => resp.json()).catch(err => console.error(err));
+                return fetch(`${API_URL}/${index.id}`, options).then(resp => resp.json()).catch(err => console.error(err));
 
             })
 
