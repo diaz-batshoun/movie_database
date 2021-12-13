@@ -34,27 +34,27 @@
          /*.content {*/
          /*    display:none;*/
          /*}*/
-         .loader {
-             height: 100vh;
-             width: 100vw;
-             overflow: hidden;
-             background-color: #16191e;
-             position: absolute;
-         }
-         .loader>div{
-             height: 100px;
-             width: 100px;
-             border:15px solid #45474b;
-             border-top-color: #2a88e6;
-             position: absolute;
-             margin: auto;
-             top: 0;
-             bottom: 0;
-             left: 0;
-             right: 0;
-             border-radius: 50%;
-             animation: spin 1.5s infinite linear;
-         }
+         /*.loader {*/
+         /*    height: 100vh;*/
+         /*    width: 100vw;*/
+         /*    overflow: hidden;*/
+         /*    background-color: #16191e;*/
+         /*    position: absolute;*/
+         /*}*/
+         /*.loader>div{*/
+         /*    height: 100px;*/
+         /*    width: 100px;*/
+         /*    border:15px solid #45474b;*/
+         /*    border-top-color: #2a88e6;*/
+         /*    position: absolute;*/
+         /*    margin: auto;*/
+         /*    top: 0;*/
+         /*    bottom: 0;*/
+         /*    left: 0;*/
+         /*    right: 0;*/
+         /*    border-radius: 50%;*/
+         /*    animation: spin 1.5s infinite linear;*/
+         /*}*/
          @keyframes spin {
              100%{
                  transform: rotate(360deg);
@@ -63,6 +63,10 @@
          .fa-ticket-alt {
              color: #017bfe;
          }
+         #navbarIcon {
+             color: white;
+             text-shadow: 1px 1px 2px black, 0 0 25px #017bfe, 0 0 5px #017bfe;
+        }
     </style>
 
 </head>
@@ -75,15 +79,49 @@
 
 <!-- NAVBAR TO SEARCH FOR MOVIES USING A MODAL POPUP FORM -->
 <header>
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-dark bg-dark" id="navbarIcon">
         <a class="webName"><i class="fas fa-film fa-5x"></i></a>
-        <!-- Button trigger modal -->
+        <!-- edit movie modal -->
+<!--        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#movieModal"-->
+<!--                style="float: left" id="modalBtn">-->
+<!--            Edit Movie-->
+<!--        </button>-->
+<!--        <div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel"-->
+<!--             aria-hidden="true">-->
+<!--            <div class="modal-dialog">-->
+<!--                <div class="modal-content">-->
+<!--                    <div class="modal-header">-->
+
+<!--                        <h5 class="modal-title" id="movieModalLabel">Edit</h5>-->
+<!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                            <span aria-hidden="true">&times;</span>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    <div class="modal-body">-->
+<!--                        <form>-->
+
+<!--                            <label for="addTitle">Movie Title</label>-->
+<!--                            <input type="text" class="form-control" id="addTitle" placeholder="Title of Movie">-->
+<!--                            <label for="addPoster">Poster Url</label>-->
+<!--                            <input type="text" class="form-control" id="addPoster" placeholder="https://">-->
+<!--                            <label for="addPlot">Plot</label>-->
+<!--                            <input type="text" class="form-control" id="addPlot" placeholder="Plot of Movie">-->
+<!--                            <label for="addID">ID</label>-->
+<!--                            <input type="text" class="form-control" id="addID" placerholder="ID">-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                    <div class="modal-footer">-->
+<!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--                        <button type="button" class="btn btn-primary" id="editBtn" data-dismiss="modal">Save changes</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <!-- Add movie Modal -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
             Add Movie
         </button>
-
-
-        <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -101,19 +139,19 @@
                         <br>
                         <div class="form-check form-check-inline ">
                             <input class="form-check-input rating" type="radio" name="inlineRadioOptions" id="inlineRadio1" value=1>
-                            <label class="form-check-label" for="inlineRadio1">1 <i class="fas fa-ticket-alt fa-lg"></i></label>
+                            <label class="form-check-label" for="inlineRadio1">1<i class="fas fa-ticket-alt fa-lg"></i></label>
 
                             <input class="form-check-input rating" type="radio" name="inlineRadioOptions" id="inlineRadio2" value=2>
-                            <label class="form-check-label" for="inlineRadio2">2 <i class="fas fa-ticket-alt fa-lg"></i></label>
+                            <label class="form-check-label" for="inlineRadio2">2<i class="fas fa-ticket-alt fa-lg"></i></label>
 
                             <input class="form-check-input rating" type="Radio" name="inlineRadioOptions" id="inlineRadio3" value=3>
-                            <label class="form-check-label" for="inlineRadio3">3 <i class="fas fa-ticket-alt fa-lg"></i></label>
+                            <label class="form-check-label" for="inlineRadio3">3<i class="fas fa-ticket-alt fa-lg"></i></label>
 
                             <input class="form-check-input rating" type="Radio" name="inlineRadioOptions" id="inlineRadio4" value=4>
-                            <label class="form-check-label" for="inlineRadio3">4 <i class="fas fa-ticket-alt fa-lg"></i></label>
+                            <label class="form-check-label" for="inlineRadio3">4<i class="fas fa-ticket-alt fa-lg"></i></label>
 
                             <input class="form-check-input rating" type="Radio" name="inlineRadioOptions" id="inlineRadio5" value=5>
-                            <label class="form-check-label" for="inlineRadio3">5 <i class="fas fa-ticket-alt fa-lg"></i></label>
+                            <label class="form-check-label" for="inlineRadio3">5<i class="fas fa-ticket-alt fa-lg"></i></label>
                         </div>
                     </div>
                     <div class="modal-footer">
