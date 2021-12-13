@@ -9,7 +9,15 @@ const API_URL = "https://functional-innate-weight.glitch.me/movies"
 //  $('#addGenre')  for user input of genre of movie
 //  $('#addDirector')   for user input of director
 //  $('#addTitle')  for user input of title of movie
-
+let deleteMovie = (id) => {
+    let options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    return fetch(`${API_URL}/${id}`, options).then(resp => resp.json()).catch(err => console.error(err))
+}
 
 //this is for reference we can delete
 fetch(API_URL).then(resp => resp.json()).then(data => {
@@ -76,6 +84,10 @@ let getMovies = () => {
                 </div>
 </div>`
             $('#movieCards').append(html);
+            $(`#delete${index.id}`).click(function(e) {
+                e.preventDefault()
+                deleteMovie(`${index.id}`)
+            })
         }
     }).catch(err => console.error(err));
 
@@ -166,24 +178,8 @@ event.preventDefault()
 });
 
 
-//function to delete movie
-$(`#delete`).click(function(e) {
-    e.preventDefault()
 
-let deleteMovie = (id) => {
-    let options = {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-    return fetch(`${API_URL}/${id}`, options).then(resp => resp.json()).catch(err => console.error(err))
-}
-deleteMovie();
-})
 
-//delete function called, will be in click event
-// deleteMovie(7)
 
 
 
