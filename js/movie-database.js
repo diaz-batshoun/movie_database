@@ -19,6 +19,21 @@ let deleteMovie = (id) => {
     return fetch(`${API_URL}/${id}`, options).then(resp => resp.json()).catch(err => console.error(err))
 }
 
+// let editMovie = (movie) => {
+//     let options = {
+//         method: 'PATCH', //using patch to be able to edit few items without changing everything
+//         headers: {
+//
+//             'Content-Type': 'application/json',
+//         },
+//
+//         body: JSON.stringify(movie)
+//     }
+//
+//
+//     return fetch(`${API_URL}/${movie.id}`, options).then(resp => resp.json()).catch(err => console.error(err));
+// }
+
 //this is for reference we can delete
 fetch(API_URL).then(resp => resp.json()).then(data => {
     console.log(data)
@@ -68,16 +83,12 @@ let getMovies = () => {
                                     <label for="addPoster">Poster Url</label>
                                     <input type="text" class="form-control" id="addPoster${index.id}" placeholder="https://">
                                     <label for="addGenre">Genre</label>
-                                    <input type="text" class="form-control" id="addGenre${index.id}" placeholder="Genre of Movie">
-                                    <label for="addDirector">Director</label>
-                                    <input type="text" class="form-control" id="addDirector${index.id}" placeholder="Director of Movie">
-                                    <label for="addYear">Year</label>
-                                    <input type="text" class="form-control" id="addYear${index.id}" placeholder="Year of Movie">
+                                    <input type="text" class="form-control" id="description${index.id}" placeholder="Description of Movie">            
                                 </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" id="editBtn${index.id}">Save changes</button>
+                                <button type="button" class="btn btn-primary" id="editBtn${index.id}" data-dismiss="modal">Save changes</button>
                             </div>
                         </div>
                     </div>
@@ -88,6 +99,32 @@ let getMovies = () => {
                 e.preventDefault()
                 deleteMovie(`${index.id}`)
             })
+
+            $(`#editBtn${index.id}`).click(function(e) {
+                e.preventDefault()
+                let editedMovie = {
+                    //id: $(index.id),
+                    plot: $(`#description${index.id}`).val(),
+                    poster: $(`#addPoster${index.id}`).val(),
+                    //rating: '',
+                    title: $(`#addTitle${index.id}`).val(),
+                };
+
+                    let options = {
+                        method: 'PATCH', //using patch to be able to edit few items without changing everything
+                        headers: {
+
+                            'Content-Type': 'application/json',
+                        },
+
+                        body: JSON.stringify(editedMovie)
+                    }
+
+
+                    return fetch(`${API_URL}/${index.id}`, options).then(resp => resp.json()).catch(err => console.error(err));
+
+            })
+
         }
     }).catch(err => console.error(err));
 
@@ -110,39 +147,26 @@ $(document).ajaxComplete(function(){
 
 //function to edit movies
 
-let editMovie = (movie) => {
-    let options = {
-        method: 'PATCH', //using patch to be able to edit few items without changing everything
-        headers: {
 
-            'Content-Type': 'application/json',
-        },
-
-        body: JSON.stringify(movie)
-    }
-
-
-    return fetch(`${API_URL}/${movie.id}`, options).then(resp => resp.json()).catch(err => console.error(err));
-}
 
 
 //will make into click event to input value in object
-$(`#editBtn`).click(event => {
-    event.preventDefault();
-    console.log($('#addTitle').value);
-let editedMovie = {
-    director: '',
-    genre: '',
-    id: 0,
-    plot: '',
-    poster:'',
-    rating: '',
-    title: $(`#addTitle${index.id}`).val(),
-    year: ''
-
-};
-
-})
+// $(`#editBtn`).click(event => {
+//     event.preventDefault();
+//     console.log($('#addTitle').value);
+// let editedMovie = {
+//     director: '',
+//     genre: '',
+//     id: 0,
+//     plot: '',
+//     poster:'',
+//     rating: '',
+//     title: $(`#addTitle${index.id}`).val(),
+//     year: ''
+//
+// };
+//
+// })
 //object editedMovie will be put into function
 // editMovie = (editedMovie);
 
