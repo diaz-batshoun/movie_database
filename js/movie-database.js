@@ -15,6 +15,7 @@ let getMovies = () => {
         <div class="card" style=" width: 15rem; margin: 1em; border-color: #141E61; border-radius: 5px">
             <h3 class="movieTitle text-center" style="background-color: #787A91; color: whitesmoke; text-shadow: 1px 1px 2px whitesmoke, 0 0 20px white, 0 0 5px ghostwhite;" >${index.title.toUpperCase()}</h3>
             <img id="moviePoster" src="${index.poster}" class="card-img-top" alt="tropic">
+
             <div class="card-body body" style="background-color: #141E61; color: #EEEEEE; ">
                 <p class="movieDescription" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;;">${index.plot}</p>
                  <button type="button" class="btn btn-primary edit-modal-btn" data-toggle="modal" data-id="${index.id}" data-target="#movieModal"
