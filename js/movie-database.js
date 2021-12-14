@@ -1,43 +1,6 @@
 //this is the api url
 const API_URL = "https://spiced-bird-magnolia.glitch.me/movies"
 
-//  $('#addBtn')  for submit button on adding movies modal.
-//  $('#movieInput') user input of movie title
-//  $('#editBtn') to submit when movie is edited
-//  $('#addPoster') for user input of image url
-//  $('#addYear')   for user input of year of movie
-//  $('#addGenre')  for user input of genre of movie
-//  $('#addDirector')   for user input of director
-//  $('#addTitle')  for user input of title of movie
-let deleteMovie = (id) => {
-    let options = {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-    return fetch(`${API_URL}/${id}`, options).then(resp => resp.json()).catch(err => console.error(err))
-}
-
-// let editMovie = (movie) => {
-//     let options = {
-//         method: 'PATCH', //using patch to be able to edit few items without changing everything
-//         headers: {
-//
-//             'Content-Type': 'application/json',
-//         },
-//
-//         body: JSON.stringify(movie)
-//     }
-//
-//
-//     return fetch(`${API_URL}/${movie.id}`, options).then(resp => resp.json()).catch(err => console.error(err));
-// }
-
-//this is for reference we can delete
-// fetch(API_URL).then(resp => resp.json()).then(data => {
-//     console.log(data)
-// }).catch(err => console.error(err));
 
 //function to call all movie data
 let getMovies = () => {
@@ -49,85 +12,62 @@ let getMovies = () => {
         for (let index of movieArray) {
             //cards
             let html = `<div class="row" >
-        <div class="card" style=" width: 15rem; margin: 1em; ">
-            <h3 class="movieTitle text-center">${index.title.toUpperCase()}</h3>
+        <div class="card" style=" width: 15rem; margin: 1em; border-color: #141E61; border-radius: 5px">
+            <h3 class="movieTitle text-center" style="background-color: #787A91; color: whitesmoke; text-shadow: 1px 1px 2px whitesmoke, 0 0 20px white, 0 0 5px ghostwhite;" >${index.title.toUpperCase()}</h3>
             <img id="moviePoster" src="${index.poster}" class="card-img-top" alt="tropic">
-            <div class="card-body body">
-                <p class="movieDescription">${index.plot}</p>
-                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#movieModal"
+            <div class="card-body body" style="background-color: #141E61; color: #EEEEEE; ">
+                <p class="movieDescription" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;;">${index.plot}</p>
+                 <button type="button" class="btn btn-primary edit-modal-btn" data-toggle="modal" data-id="${index.id}" data-target="#movieModal"
                 style="float: left" id="modalBtn">
             Edit Movie
         </button>
                
-                <button class="btn btn-outline-primary my-2 my-sm-0" id="delete" style="float: right" type="submit">delete</button>
+                <button class="btn btn-outline-primary my-2 my-sm-0 delete-btn" id="delete" style="float: right" data-id="${index.id}" type="submit">delete</button>
             </div>
         </div>
             
-        <div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
 
-                        <h5 class="modal-title" id="movieModalLabel">Edit</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-
-                            <label for="addTitle">Movie Title</label>
-                            <input type="text" class="form-control" id="addTitle${index.id}" placeholder="Title of Movie">
-                            <label for="addPoster">Poster Url</label>
-                            <input type="text" class="form-control" id="addPoster${index.id}" placeholder="https://">
-                            <label for="addPlot">Plot</label>
-                            <input type="text" class="form-control" id="addPlot${index.id}" placeholder="Plot of Movie">
-<!--                            <label for="addID">ID</label>-->
-<!--                            <input type="text" class="form-control" id="addID" placerholder="ID">-->
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="editBtn" data-id="${index.id}" data-dismiss="modal">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>   
 </div>`
-            $("#modalBtn").click(function(){
-                $("#movieModal").modal();
-            });
 
 
             $('#movieCards').append(html);
-            $(`#delete${index.id}`).click(function(e) {
+
+            //delete event referenced https://github.com/tisdale-vidaurri-movie-app/movie-app/blob/main/js/movie-app.js
+            $(`.delete-btn`).click(function (e) {
+                var deleteID = $(this).data('id');
+                console.log(deleteID);
                 e.preventDefault()
-                deleteMovie(`${index.id}`)
+                let options = {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+                return fetch(`${API_URL}/${deleteID}`, options).then(resp => resp.json()).then(getMovies).catch(err => console.error(err))
             })
 
-            $(`#editBtn${index.id}`).click(function(e) {
+
+            //edit click event.  When edit button is clicked data is fetched and the data properties are displayed in ID forms.
+            $('.edit-modal-btn').click(function () {
+                var editID = $(this).data('id');
+                return fetch(`${API_URL}/${editID}`).then(resp => resp.json()).then(data => {
+                    $('#addTitle').val(data.title)
+                    $('#addPlot').val(data.plot)
+                    $('#addPoster').val(data.poster)
+                    $('#addID').val(data.id)
+                }).catch(err => console.error(err));
+            })
+            //click event when user clicks on save changes.
+            $(`#editBtn`).click(function (e) {
                 e.preventDefault()
-                $(`#editBtn${ele.id}`).attr('disabled');
-                //console.log($(`#addTitle${this.id}`).val())
-                let userTitle = $(`#addTitle${index.id}`).val()
-                let userPlot = $(`#addPlot${index.id}`).val()
-                let userPoster = $(`#addPoster${index.id}`).val()
-                var editID = $(this).data('id')
+
+                let editID = $('#addID').val();
                 console.log(editID)
                 let editedMovie = {
-                    //id: $('#addID${index.id}').val(),
-                    plot: userPlot,
-                    poster: userPoster,
-                    //rating: '',
-                    title: userTitle,
+                    plot: $(`#addPlot`).val(),
+                    poster: $(`#addPoster`).val(),
+                    title: $(`#addTitle`).val(),
                 };
-                // if ($(`#addPlot`).val() === '') {
-                //     return false;
-                // }else {
-                //     editedMovie = {plot: $(`#addPlot`).val()};
-                // }
-
 
                 let options = {
                     method: 'PATCH', //using patch to be able to edit few items without changing everything
@@ -140,7 +80,7 @@ let getMovies = () => {
                 }
 
 
-                return fetch(`${API_URL}/${index.id}`, options).then(resp => resp.json()).catch(err => console.error(err));
+                return fetch(`${API_URL}/${editID}`, options).then(resp => resp.json()).then(getMovies).catch(err => console.error(err));
 
             })
 
@@ -150,109 +90,44 @@ let getMovies = () => {
 }
 // timeout function removes removes loading class and gets movies
 setTimeout(function () {
-
+//
     getMovies();
-}, 3000);
+}, 2000);
 
-$(document).ajaxStart(function(){
+$(document).ajaxStart(function () {
     // Show image container
     $(".loading").show();
 });
-$(document).ajaxComplete(function(){
+$(document).ajaxComplete(function () {
     // Hide image container
     $(".loading").hide();
 });
 
+// function to create movie
+let createMovie = (movie) => {
+    let options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(movie)
+    }
+    return fetch(API_URL, options).then(resp => resp.json()).then(getMovies).catch(err => console.error(err));
+}
 
-//function to edit movies
+// creates new movie object, click event to input value
+$('#addBtn').click(function (event) {
+    event.preventDefault()
 
+    let createdMovie = {
+        rating: $('.rating[type=radio]:checked').val(),
+        title: $('#movieInput').val(),
+        poster: 'img/movies.jpeg',
+        plot: ""
 
+    }
 
+    createMovie(createdMovie);
 
-//will make into click event to input value in object
-// $(`#editBtn`).click(event => {
-//     event.preventDefault();
-//     console.log($('#addTitle').value);
-// let editedMovie = {
-//     director: '',
-//     genre: '',
-//     id: 0,
-//     plot: '',
-//     poster:'',
-//     rating: '',
-//     title: $(`#addTitle${index.id}`).val(),
-//     year: ''
-//
-// };
-//
-// })
-//object editedMovie will be put into function
-// editMovie = (editedMovie);
-
-
-
-
-
-
-//function to create movie
-// let createMovie = (movie) => {
-//     let options = {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(movie)
-//     }
-//     return fetch(API_URL, options).then(resp => resp.json()).catch(err => console.error(err));
-// }
-//
-// // creates new movie object, click event to input value
-// $('#addBtn').click(function (event) {
-// event.preventDefault()
-//
-//     let createdMovie = {
-//         rating: $('.rating[type=radio]:checked').val(),
-//         title: $('#movieInput').val(),
-//
-//     }
-//
-//     createMovie(createdMovie);
-//
-// });
-// $(`#editBtn`).click(function(e) {
-//     e.preventDefault()
-//
-//     let editedMovie = {
-//          id: $('#addID').val(),
-//         // plot: $(`#addPlot`).val(),
-//         // poster: $(`#addPoster`).val(),
-//         // //rating: '',
-//         // title: $(`#addTitle`).val(),
-//     };
-//     if ($(`#addPlot`).val() === '') {
-//         return false;
-//     }else {
-//         editedMovie = {plot: $(`#addPlot`).val()};
-//     }
-//
-//     let options = {
-//         method: 'PATCH', //using patch to be able to edit few items without changing everything
-//         headers: {
-//
-//             'Content-Type': 'application/json',
-//         },
-//
-//         body: JSON.stringify(editedMovie)
-//     }
-//
-//
-//     return fetch(`${API_URL}/${editedMovie.id}`, options).then(resp => resp.json()).catch(err => console.error(err));
-//
-// })
-
-
-
-
-
-
+});
 
