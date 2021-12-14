@@ -26,47 +26,16 @@
          body{
              font-family: 'EB Garamond', serif;;
          }
-         .movieTitle{
-             font-family: 'Bebas Neue', cursive;
-             font-size: 36px;
-             margin-bottom: auto;
-         }
-         /*.content {*/
-         /*    display:none;*/
-         /*}*/
-         /*.loader {*/
-         /*    height: 100vh;*/
-         /*    width: 100vw;*/
-         /*    overflow: hidden;*/
-         /*    background-color: #16191e;*/
-         /*    position: absolute;*/
-         /*}*/
-         /*.loader>div{*/
-         /*    height: 100px;*/
-         /*    width: 100px;*/
-         /*    border:15px solid #45474b;*/
-         /*    border-top-color: #2a88e6;*/
-         /*    position: absolute;*/
-         /*    margin: auto;*/
-         /*    top: 0;*/
-         /*    bottom: 0;*/
-         /*    left: 0;*/
-         /*    right: 0;*/
-         /*    border-radius: 50%;*/
-         /*    animation: spin 1.5s infinite linear;*/
-         /*}*/
-         @keyframes spin {
-             100%{
-                 transform: rotate(360deg);
-             }
-         }
          .fa-ticket-alt {
              color: #017bfe;
          }
-         #navbarIcon {
-             color: white;
-             text-shadow: 1px 1px 2px black, 0 0 25px #017bfe, 0 0 5px #017bfe;
-        }
+         .logo {
+             margin:auto;
+         }
+         .logo-icon{
+             height: 70px;
+         }
+
     </style>
 
 </head>
@@ -79,9 +48,8 @@
 
 <!-- NAVBAR TO SEARCH FOR MOVIES USING A MODAL POPUP FORM -->
 <header>
-    <nav class="navbar navbar-dark bg-dark" id="navbarIcon">
-        <a class="webName"><i class="fas fa-film fa-5x"></i></a>
-
+    <nav class="navbar navbar-dark" id="navbarIcon" style="background-color: white">
+        <a href=""><img class="logo-icon" src="img/video.png"> </a>
         <div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
@@ -167,6 +135,7 @@
 
                 <!--this is the bootstrap spinner in a disabled button for the loading screen    -->
     <button class="btn btn-outline-dark btn-lg loading"  type="button" disabled>
+        <img class="logo" src="img/logo.png">
         <span class="spinner-grow spinner-grow-lg" role="status" aria-hidden="true"></span>
         Loading...
     </button>
