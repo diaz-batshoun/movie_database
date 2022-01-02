@@ -18,10 +18,11 @@
             background: url("img/movie.jpeg");
             background-repeat: no-repeat;
             background-size: cover;
-            height: 900px;
+            /*height: 900px;*/
             background-position: center;
-            position: relative;
+            /*position: fixed;*/
             /*1450px 900px*/
+            background-attachment: fixed;
         }
          body{
              font-family: 'EB Garamond', serif;;
@@ -99,24 +100,24 @@
                         <label for="movieInput">Movie Title</label>
                         <input id="movieInput" class="form-control" type="text" placeholder="Type Your Movie Title">
                         <br>
-                        <label>Movie Rating</label>
-                        <br>
-                        <div class="form-check form-check-inline ">
-                            <input class="form-check-input rating" type="radio" name="inlineRadioOptions" id="inlineRadio1" value=1>
-                            <label class="form-check-label" for="inlineRadio1">1<i class="fas fa-ticket-alt fa-lg"></i></label>
+<!--                        <label>Movie Rating</label>-->
+<!--                        <br>-->
+<!--                        <div class="form-check form-check-inline ">-->
+<!--                            <input class="form-check-input rating" type="radio" name="inlineRadioOptions" id="inlineRadio1" value=1>-->
+<!--                            <label class="form-check-label" for="inlineRadio1">1<i class="fas fa-ticket-alt fa-lg"></i></label>-->
 
-                            <input class="form-check-input rating" type="radio" name="inlineRadioOptions" id="inlineRadio2" value=2>
-                            <label class="form-check-label" for="inlineRadio2">2<i class="fas fa-ticket-alt fa-lg"></i></label>
+<!--                            <input class="form-check-input rating" type="radio" name="inlineRadioOptions" id="inlineRadio2" value=2>-->
+<!--                            <label class="form-check-label" for="inlineRadio2">2<i class="fas fa-ticket-alt fa-lg"></i></label>-->
 
-                            <input class="form-check-input rating" type="Radio" name="inlineRadioOptions" id="inlineRadio3" value=3>
-                            <label class="form-check-label" for="inlineRadio3">3<i class="fas fa-ticket-alt fa-lg"></i></label>
+<!--                            <input class="form-check-input rating" type="Radio" name="inlineRadioOptions" id="inlineRadio3" value=3>-->
+<!--                            <label class="form-check-label" for="inlineRadio3">3<i class="fas fa-ticket-alt fa-lg"></i></label>-->
 
-                            <input class="form-check-input rating" type="Radio" name="inlineRadioOptions" id="inlineRadio4" value=4>
-                            <label class="form-check-label" for="inlineRadio3">4<i class="fas fa-ticket-alt fa-lg"></i></label>
+<!--                            <input class="form-check-input rating" type="Radio" name="inlineRadioOptions" id="inlineRadio4" value=4>-->
+<!--                            <label class="form-check-label" for="inlineRadio3">4<i class="fas fa-ticket-alt fa-lg"></i></label>-->
 
-                            <input class="form-check-input rating" type="Radio" name="inlineRadioOptions" id="inlineRadio5" value=5>
-                            <label class="form-check-label" for="inlineRadio3">5<i class="fas fa-ticket-alt fa-lg"></i></label>
-                        </div>
+<!--                            <input class="form-check-input rating" type="Radio" name="inlineRadioOptions" id="inlineRadio5" value=5>-->
+<!--                            <label class="form-check-label" for="inlineRadio3">5<i class="fas fa-ticket-alt fa-lg"></i></label>-->
+<!--                        </div>-->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -129,7 +130,7 @@
 </header>
 
 
-<section class="container-fluid d-flex mt-5 justify-content-around" id="movieCards">
+<section class="container-fluid d-flex flex-wrap mt-5 justify-content-center" id="movieCards">
     <!-- using a for loop in js we can append the cards into this section -->
     <!-- CARD INFORMATION. ADD BUTTONS AND MODAL WITH FORM INSIDE TO EDIT INFORMATION -->
 
@@ -149,5 +150,6 @@
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
 <script src="js/movie-database.js"></script>
+<script src="js/keys.js"></script>
 </body>
 </html>
