@@ -2,6 +2,7 @@
 const API_URL = "https://spiced-bird-magnolia.glitch.me/movies"
 
 
+
 //function to call all movie data
 let getMovies = () => {
     fetch(API_URL).then(resp => resp.json()).then(data => {
@@ -12,8 +13,9 @@ let getMovies = () => {
         for (let index of movieArray) {
             //cards
             let html = `<div class="row" >
-        <div class="card" style=" width: 15rem; margin: 1em; border-color: #141E61; border-radius: 5px">
-            <h3 class="movieTitle text-center" style="background-color: #787A91; color: whitesmoke; text-shadow: 1px 1px 2px whitesmoke, 0 0 20px white, 0 0 5px ghostwhite;" >${index.title.toUpperCase()}</h3>
+        <div class="card" style=" width: 15rem; margin: 2em; 
+         border-color: #141E61; border-radius: 5px">
+            <h3 class="movieTitle text-center" style="background-color: #787A91; color: whitesmoke; text-shadow: 1px 1px 2px whitesmoke, 0 0 20px white, 0 0 5px ghostwhite;" >${index.title}</h3>
             <img id="moviePoster" src="${index.poster}" class="card-img-top" alt="tropic">
 
             <div class="card-body body" style="background-color: #141E61; color: #EEEEEE; ">
@@ -91,9 +93,9 @@ let getMovies = () => {
 }
 // timeout function removes removes loading class and gets movies
 setTimeout(function () {
-//
-    getMovies();
-}, 2000);
+
+getMovies();
+}, 4000);
 
 $(document).ajaxStart(function () {
     // Show image container
@@ -120,15 +122,19 @@ let createMovie = (movie) => {
 $('#addBtn').click(function (event) {
     event.preventDefault()
 
-    let createdMovie = {
-        rating: $('.rating[type=radio]:checked').val(),
-        title: $('#movieInput').val(),
-        poster: 'img/movies.jpeg',
-        plot: ""
 
-    }
+    return fetch("http://www.omdbapi.com/?t=" + $('#movieInput').val() + "&apikey=" + movieApi).then(response => response.json()).then(data => {
+        let createdMovie = {
+            title: data.Title,
+            poster: data.Poster,
+            plot: data.Plot
 
-    createMovie(createdMovie);
+        }
+        console.log(data);
+        createMovie(createdMovie)
+    }).catch(error => console.log(error))
+
+    // createMovie(`${createdMovie}`)
 
 });
 
